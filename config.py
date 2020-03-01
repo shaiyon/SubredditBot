@@ -1,0 +1,6 @@
+username = ""
+password = ""
+client_id = ""
+client_secret = ""
+bot_name = ""
+bot_name_raw = r""
