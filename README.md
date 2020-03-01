@@ -34,7 +34,6 @@ body |
 "[deleted]"|
 "Close! It's act grade 2 titanium (grade 2 will darken and develop a patina over time and I can tell its a little bit darker than when I got it back in late June) and 18k rose gold. \n\nThanks, it's really a neat color scheme that they got going on with this particular Speedmaster that you don't see everyday. "  |
 "\&gt; Adding on to that I think that having a seconds hand is pointless if it is not showing the actual correct second.\n\nIt's really not that pointless. It gives you a quick way to check if your watch is actually still running and it also allows you to time things. I use it for the latter quite often. \n\nI don't think it's that silly since watches are marketed as luxury goods now, and not really as time keeping devices."|
-"I will go ahead and not believe that whatsoever, while you go ahead and try to make another claim saying you are actually not a trust fund baby."|
 
 The data is clearly high quality, but is in the markdown format and needs to be cleaned up before encoding and feeding into GPT-2. Code and more detail on the data cleaning process can be found [here](../master/clean_data.ipynb).
 
@@ -46,11 +45,11 @@ Here are a few early stage samples:
 
 >"My only concern is that that they are only about $70 and I am not an expert on Seiko. I have been wearing them through college and high school and it is still in great shape."
 
->"The thing is a bit old, but it looks really nice. I bought it from the 70s and had no complaints about it. They've been out of stock on eBay for a while, but I guess they're back now due to demand from buyers?"
+>"There is not a lot of value in a mechanical watch like the Seamaster, but there is a small fraction of value in a quartz. Most of quartz watches are made with the same technology, so I really hope some people could learn a ton about the technology."
 
->"However, the dials on your sub are just stunning! (I had my eye on one from the 1970s. That is the style that I currently wear on a daily basis.)"
+>"Just a guess at it....if it were me I would go for something in the sub-$400 range and save up for it. It'd be an awesome collection piece but you would have quite a large range to choose from. I think something between this and something like a Tissot Visodate or something similar to that would serve you perfectly well if you're willing to pay more than $100."
 
-The samples sound slightly off (the model really likes the number 70), but nothing a bit of hyperparameter tuning can't fix! My next step is to more strongly deincentivize repetition so the temperature can be lowered, and tweaking the optimizer / learning rate.
+The samples sound slightly off, but nothing a bit of hyperparameter tuning can't fix! My next step is to more strongly deincentivize repetition so the temperature can be lowered, and tweaking the optimizer / learning rate.
 
 ## Methodology - the bot
 
