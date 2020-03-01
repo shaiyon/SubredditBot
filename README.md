@@ -3,7 +3,7 @@ Have you ever found yourself needing a third party to intervene in a reddit argu
 
 ## Abstract
 
-This project is a reddit bot that generates coherent, humorous responses to a user prompt when invoked. For text generation, it employs the state of the art GPT-2 language model developed by OpenAI with tensorflow, fine-tuned with reddit comment data from any set of subreddits desired. Using Python, I cleaned the comment data for modeling, and am currently adjusting model hyperparameters and code for optimum generation. Additionally, I will develop a bot that responds to any comment starting with "WatchBot, " in the /r/Watches subreddit, using the text after the comma as a prompt the bot uses to generate a random amount of text (1-3 paragraphs) in response.
+This project is a reddit bot that generates coherent, humorous responses to a user prompt when invoked. For text generation, it employs the state of the art GPT-2 language model developed by OpenAI with tensorflow, fine-tuned with reddit comment data from a set of subreddits. I wrote a script to clean and encode reddit comment data for modeling, and am currently adjusting model hyperparameters for optimum generation. Additionally, I am developing a bot that will reply to any comment on reddit containing the bot's name, using the text in the comment as the prompt for generation. All of the code is extremely modular, and replicating my results very easy!
 
 ## Motivation
 
@@ -53,6 +53,6 @@ The samples sound slightly off, but nothing a bit of hyperparameter tuning can't
 
 ## Methodology - the bot
 
->IN PROGRESS
+A lot of reddit bots have been made before, so there is a precedent and abundant resources available for constructing one. Currently, the bot will respond to any comment made on reddit after its last runtime invoking it, using the Pushshift API to efficiently sift through comments. Bot code available [here](../master/bot.py).  
 
 ## This README and project are still under construction. A lot more coming soon.
