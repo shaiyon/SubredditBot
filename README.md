@@ -26,7 +26,7 @@ WHERE
 I'm a huge watch geek, so I chose watch related subreddits, but this query can be successfuly run with any group of subreddits.
 
 
-The result of the query was a massive 505MB csv of text:
+The result of the query was a massive 530MB csv of text:
 
 body |
 ------------ |
@@ -35,7 +35,7 @@ body |
 "Close! It's act grade 2 titanium (grade 2 will darken and develop a patina over time and I can tell its a little bit darker than when I got it back in late June) and 18k rose gold. \n\nThanks, it's really a neat color scheme that they got going on with this particular Speedmaster that you don't see everyday. "  |
 "\&gt; Adding on to that I think that having a seconds hand is pointless if it is not showing the actual correct second.\n\nIt's really not that pointless. It gives you a quick way to check if your watch is actually still running and it also allows you to time things. I use it for the latter quite often. \n\nI don't think it's that silly since watches are marketed as luxury goods now, and not really as time keeping devices."|
 
-The data is clearly high quality, but is in the markdown format and needs to be cleaned up before encoding and feeding into GPT-2. Code and more detail on the data cleaning process can be found [here](../master/clean_data.ipynb).
+The data is clearly high quality, but is in the markdown format and needs to be cleaned up before encoding and feeding into GPT-2. Data cleaning script can be found [here](../master/clean_data.py).
 
 ## Methodology - the model
 
