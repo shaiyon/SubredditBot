@@ -3,7 +3,7 @@ Have you ever found yourself needing a third party to intervene in a reddit argu
 
 ## Abstract
 
-This project is a reddit bot that generates coherent, humorous responses to a user prompt when invoked. For text generation, it employs the state of the art GPT-2 language model developed by OpenAI with tensorflow, fine-tuned with reddit comment data from a set of subreddits. I wrote a script to clean and encode reddit comment data for modeling, and am currently adjusting model hyperparameters for optimum generation. Additionally, I am developing a bot that will reply to any comment on reddit containing the bot's name, using the text in the comment as the prompt for generation. All of the code is extremely modular, and replicating my results very easy!
+This project is a reddit bot that generates coherent, humorous responses to a user prompt when invoked. For text generation, it employs the state of the art [GPT-2](https://openai.com/blog/better-language-models/) language model, fine-tuned with reddit comment data from a set of subreddits. I wrote a script to clean and encode reddit comment data for modeling, and am currently adjusting model hyperparameters for optimum generation. Additionally, I am developing a bot that will reply to any comment on reddit containing the bot's name, using the text in the comment as the prompt for generation. All of the code is extremely modular, and replicating my results very easy!
 
 ## Motivation
 
@@ -39,7 +39,7 @@ The data is clearly high quality, but is in the markdown format and needs to be 
 
 ## Methodology - the model
 
-GPT-2 needs no introduction, and neither does its incredible ability to generate semi-lifelike text samples multiple paragraphs long. Projects like [AI Dungeon 2](https://towardsdatascience.com/the-creator-of-ai-dungeon-2-shares-gpt-2-finetuning-advice-e5800df407c9) have proven the model's viability in providing the user interacting with it a lot of entertainment. With Python and Tensorflow, I finetuned the 355 million hyperparameter edition of the model, as larger ones refused to load into my GPU's memory. Code for finetuning and text generating [here](../master/train_model.py).  
+[GPT-2](https://openai.com/blog/better-language-models/) needs no introduction, and neither does its incredible ability to generate semi-lifelike text samples multiple paragraphs long. Projects like [AI Dungeon 2](https://towardsdatascience.com/the-creator-of-ai-dungeon-2-shares-gpt-2-finetuning-advice-e5800df407c9) have proven the model's viability in providing the user interacting with it a lot of entertainment. With Python and Tensorflow, I finetuned the 355 million hyperparameter edition of the model, as larger ones refused to load into my GPU's memory. Code for finetuning and text generating [here](../master/train_model.py).  
 
 Here are a few early stage samples:
 
