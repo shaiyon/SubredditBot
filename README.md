@@ -53,6 +53,7 @@ The samples sound slightly off, but nothing a bit of hyperparameter tuning can't
 
 ## Methodology - the bot
 
-A lot of reddit bots have been made before, so there is a precedent and abundant resources available for constructing one. Currently, the bot will respond to any comment made on reddit after its last runtime invoking it, using the Pushshift API to efficiently sift through comments. Bot code available [here](../master/bot.py).  
+Conveniently, reddit has the functional and easy to use PRAW API, making it relatively painless to develop a bot to suit your needs. The bot sifts through all reddit comments invoking its name using the Pushshift API in the format "bot_name, " using the text after the comma as the prompt it uses to generate text, in which it replies to the original poster with. Bot code [here](../master/bot.py).  
+
 
 ## This README and project are still under construction. A lot more coming soon.
