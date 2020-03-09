@@ -3,10 +3,14 @@
 # structure from https://github.com/hyerramreddy
 # Shaiyon Hariri
 
+import os
+import sys
 import praw
 import config
 import re
 from time import sleep
+from random import randrange
+from interactive_conditional_samples import interact_model
 import json
 import requests
 
@@ -56,7 +60,7 @@ def reply_to_comment(reddit, comment_id, comment_reply, comment_subreddit, comme
 
 # Stub, will connect with GPT-2 text generation to complete the project
 def generate_response(comment, model):
-    return comment
+    return interact_model(input_text=comment, model_name=model, limit=randrange(40, 80))
 
 def run(reddit, model):
     # Time of last comment replied to
@@ -73,10 +77,6 @@ def run(reddit, model):
 
         if (len(parsed_comment_json["data"]) > 0):
             last_utc = parsed_comment_json["data"][0]["created_utc"]
-
-        # Write to file the last utc
-        with open("utc.txt", "w") as f:
-            f.write(str(last_utc))
 
         for comment in parsed_comment_json["data"]:
 
@@ -95,13 +95,23 @@ def run(reddit, model):
                 reply_to_comment(reddit, comment_id, comment_reply, comment_subreddit, comment_author, comment_body)
                 
                 print ("\nFetching comments..")
+        # Remove comment data after bot is done with it
+        if os.path.exists("comment_data.json"):
+            os.remove("comment_data.json")
 
     except Exception as e:
         print(str(e.__class__.__name__) + ": " + str(e))
+
+    # Write to file the last utc
+    #with open("utc.txt", "w") as f:
+     #   f.write(str(last_utc))
 
     return str(last_utc)
 
 if __name__ == "__main__":
     reddit = login()
-    model = ""
+    if len(sys.argv) != 2:
+        print('You must enter the model name as a parameter, e.g.: bot.py 355M')
+        sys.exit(1)    
+    model = sys.argv[1]
     run(reddit, model)
