@@ -3,11 +3,11 @@ Have you ever found yourself needing a third party to intervene in a reddit argu
 
 ## Abstract
 
-This project is a reddit bot that generates coherent, humorous responses to a user prompt when invoked. For text generation, it employs the state of the art [GPT-2](https://openai.com/blog/better-language-models/) language model, fine-tuned with reddit comment data from a set of subreddits. I wrote a script to clean and encode reddit comment data for modeling, and am currently adjusting model hyperparameters for optimum generation. Additionally, I am developing a bot that will reply to any comment on reddit containing the bot's name, using the text in the comment as the prompt for generation. All of the code is extremely modular, and replicating my results very easy!
+This project is a reddit bot that generates coherent, humorous responses to a user prompt when invoked. For text generation, it employs the state of the art [GPT-2](https://openai.com/blog/better-language-models/) language model, fine-tuned with reddit comment data from a set of subreddits to mimic the cadence of redditors. I wrote a script to clean and encode reddit comment data for modeling, and adjusted the model's hyperparameters for optimum generation. Additionally, I developed a bot that replies to any comment on reddit containing its name, using the text in the comment as the prompt for generation. All of the code is modular, and replicating my results is very easy!
 
 ## Motivation
 
-I remember first being captivated by GPT-2 while watching [Computerphile's YouTube video on a sample it generated](https://www.youtube.com/watch?v=89A4jGvaaKk). How can nothing but statistical relationships between words generate such robust and coherent text? I was extremely excited when I found out the code was released to the public, and wanted to try using it myself. I hypothesized that reddit comments would be the perfect data source to fine-tune the model, as there is a never-ending sea of comments available with interesting content. Thus, SubredditBot was born.
+I remember first being captivated by GPT-2 while watching [Computerphile's YouTube video on a sample it generated](https://www.youtube.com/watch?v=89A4jGvaaKk). How can nothing but statistical relationships between words generate such robust and coherent text? I was extremely excited when I found out the code was released to the public, and wanted to try using it myself. I hypothesized that reddit comments would be the perfect data source to fine-tune the model, as there is a never-ending sea of comments available with interesting content. Furthermore, projects like [AI Dungeon 2](https://towardsdatascience.com/the-creator-of-ai-dungeon-2-shares-gpt-2-finetuning-advice-e5800df407c9) have proven the model's viability in providing the user interacting with it a lot of entertainment. With all the pieces in place, SubredditBot was born.
 
 ## Methodology - the data
 
@@ -39,17 +39,13 @@ The data is clearly high quality, but is in the markdown format and needs to be 
 
 ## Methodology - the model
 
-[GPT-2](https://openai.com/blog/better-language-models/) needs no introduction, and neither does its incredible ability to generate semi-lifelike text samples multiple paragraphs long. Projects like [AI Dungeon 2](https://towardsdatascience.com/the-creator-of-ai-dungeon-2-shares-gpt-2-finetuning-advice-e5800df407c9) have proven the model's viability in providing the user interacting with it a lot of entertainment. With Python and Tensorflow, I finetuned the 355 million hyperparameter edition of the model, as larger ones refused to load into my GPU's memory. Code for finetuning and text generating [here](../master/train_model.py).  
+GPT-2 (Generative Pretrained Transformer) may be some of the latest and greatest in text generation, but the architecture of the model is not especially novel. It is an extremely large [transformer](https://arxiv.org/abs/1706.03762) trained unsupervised on a monstrous 40GB text corpus (compilation of outbound links from Reddit which received at least 3 karma). Transformers use a generic mechanism based on encoder-decoders to detect dependencies between inputs and outputs. Due to their property of linearly improving performance when given more data, GPT-2 generates text of unprecedented realism.
 
-Here are a few early stage samples:
+<p align="center">
+  <img src="https://miro.medium.com/max/1474/1*b15IvFFUT-WtPRdxsnoMQw.png" width="460" height="460"> 
+</p>
 
->"My only concern is that that they are only about $70 and I am not an expert on Seiko. I have been wearing them through college and high school and it is still in great shape."
-
->"There is not a lot of value in a mechanical watch like the Seamaster, but there is a small fraction of value in a quartz. Most of quartz watches are made with the same technology, so I really hope some people could learn a ton about the technology."
-
->"Just a guess at it....if it were me I would go for something in the sub-$400 range and save up for it. It'd be an awesome collection piece but you would have quite a large range to choose from. I think something between this and something like a Tissot Visodate or something similar to that would serve you perfectly well if you're willing to pay more than $100."
-
-The samples sound slightly off, but nothing a bit of hyperparameter tuning can't fix! My next step is to more strongly deincentivize repetition so the temperature can be lowered, and tweaking the optimizer / learning rate.
+I fine-tuned the 355 million parameter edition of the model, tweaking hyperparameters to make the text generated seem more natural and less repetitive. Then, I edited an existing script for generating samples to be able to connect with the reddit bot. Code for generating samples [here](../master/interactive_conditional_samples.py).  
 
 ## Methodology - the bot
 
@@ -60,6 +56,12 @@ Sample interaction with the bot:
 watches_bot, Should I buy a Seiko 5?
 
 > Or a Timex Weekender? I'm pretty sure it's just a little bit bigger than a Seiko 5. Wearing my favourite watch this morning as well, the Seiko SNN231. Some of the comments were more supportive of the watch, but I've seen it a lot more than a normal post on here. My wrist is 6.5" and I think it's too big for me, but my general rule is "if you like it, get it." This is my Seiko 5. It's on a perlon strap, I'd say about 6.5" and it's a great watch. It's a little bit smaller than I'd like, but it's pretty much perfect for me. I just got it a few weeks ago, but I haven't worn it much, and I've had it for like 6 months, so I'd like to get back into watches again. I think this is a great collection of watches. It's great to see so many different styles and colors. Not just the new limited edition. The limited edition on this watch was last year. My love for the Citizen Nighthawk has been growing over the last couple years. I had the opportunity to purchase it recently and I fell in love with it. I finally took the plunge and bought it. I know a lot of people are going to be offended by this post, but I wanted to share it with you guys so we all know what a beautiful watch it is. I have a picture of the movement and inside of the caseback. As far as I know, the Nighthawk is the first Citizen I have owned. I have been looking for a watch for a long time and this was the best one I could find for a reasonable price. It came in like a month ago and I've already received a few compliments on it. I think it looks like the regular, just the "battery" I have the same problem with my current watch. I've been trying to figure out what's the best way to tell the time. It's so hard to read the time in the dark. I've never seen a Zim watch with a screw-down crown. That's just so nice to see a Citizen with a chronograph, they usually only have one or two, and I think Citizen's are amazing. I have the same one, and it's also in my daily rotation. I think it's pretty cool, and the
+
+## Key Results
+
+## Summary 
+
+## Future Work
 
 
 
