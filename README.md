@@ -12,7 +12,7 @@ I remember first being captivated by GPT-2 while watching [Computerphile's YouTu
 
 ## Methodology - the data
 
-The reddit comment data was collected from [Google BigQuery's public database](https://bigquery.cloud.google.com/dataset/fh-bigquery:reddit_comments), containing comments from as far back as 2005. An SQL query was enough to gather the text needed:
+The Reddit comment data was collected from [Google BigQuery's public database](https://bigquery.cloud.google.com/dataset/fh-bigquery:reddit_comments), containing comments from as far back as 2005. An SQL query was enough to gather the text needed:
 ```sql
 #legacySQL
 SELECT 
@@ -40,17 +40,18 @@ The data is clearly high quality, but is in the markdown format and needs to be 
 
 ## Methodology - the model
 
-GPT-2 (Generative Pretrained Transformer) may be some of the latest and greatest in text generation, but the architecture of the model is not especially novel. It is an extremely large [transformer](https://arxiv.org/abs/1706.03762) pretrained unsupervised on a monstrous 40GB text corpus. Transformers employ a generic mechanism based on encoder-decoders to detect dependencies between inputs and outputs. Due to transformers' property of improving performance linearly when given more data and the large initial dataset, GPT-2 generates text of unprecedented realism. Out of the box, the model is generalized and unspecific, but is ripe for fine-tuning with other data, and the generated text maintains its coherence even after retraining.
+GPT-2 (Generative Pretrained Transformer) may be some of the latest and greatest in text generation, but the architecture of the model is not especially novel. It is an extremely large [transformer](https://arxiv.org/abs/1706.03762) pretrained unsupervised on a monstrous 40GB text corpus. Transformers employ a generic mechanism based on encoder-decoders to detect dependencies between inputs and outputs. Due to transformers' property of improving performance linearly when given more data and the large initial dataset, GPT-2 generates text of unprecedented realism when compared to its peers. Out of the box, the model is generalized and unspecific, but is ripe for fine-tuning with other data, and the generated text maintains its coherence even after retraining.
 
 <p align="center">
   <img src="https://miro.medium.com/max/1474/1*b15IvFFUT-WtPRdxsnoMQw.png" width="460" height="460"> 
 </p>
 
-I fine-tuned the 355 million parameter edition of the model, tweaking hyperparameters to make the text generated seem more natural and less repetitive. Then, I edited an existing script for generating samples to be able to connect with the reddit bot. Code for generating samples [here](../master/interactive_conditional_samples.py).  
+I fine-tuned the 355 million parameter edition of the model, tweaking hyperparameters to make the text generated seem more natural and less repetitive. Then, I edited an existing script for generating samples to be able to connect with the Reddit bot. Code for generating samples [here](../master/interactive_conditional_samples.py).  
 
 ## Methodology - the bot
 
-Conveniently, reddit has the functional and easy to use PRAW API, making it relatively painless to develop a bot to suit your needs. The bot searches through all reddit comments created since its last runtime for those containing its name in the format "bot_name, " with the Pushshift API, uses the text after the comma as the prompt for generation, and replies to the initial comment with the text it generated. Bot code [here](../master/bot.py).
+Conveniently, Reddit has the functional and easy to use PRAW API, making it relatively painless to develop a bot to suit your needs. The bot searches through all Reddit comments created since its last runtime for those containing its name in the format "bot_name, " with the Pushshift API. Then, it uses the text after the comma as the prompt for generation, and replies to the initial comment with the text it generated. Bot code [here](../master/bot.py).
+
 
 Sample interaction with the bot:
 
@@ -60,7 +61,7 @@ watches_bot, Should I buy a Seiko 5?
 
 ## Key Results
 
-## Summary 
+
 
 ## Future Work
 
