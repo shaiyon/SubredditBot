@@ -3,7 +3,8 @@ Have you ever found yourself needing a third party to intervene in a reddit argu
 
 ## Abstract
 
-This project is a reddit bot that generates coherent, humorous responses to a user prompt when invoked. For text generation, it employs the state of the art [GPT-2](https://openai.com/blog/better-language-models/) language model, fine-tuned with reddit comment data from a set of subreddits to mimic the cadence of redditors. I wrote a script to clean and encode reddit comment data for modeling, and adjusted the model's hyperparameters for optimum generation. Additionally, I developed a bot that replies to any comment on reddit containing its name, using the text in the comment as the prompt for generation. All of the code is modular, and replicating my results is very easy!
+This project is a reddit bot that generates coherent, humorous responses to a user prompt when invoked. For text generation, it 
+deploys the state of the art [GPT-2](https://openai.com/blog/better-language-models/) language model, fine-tuned with reddit comment data from a set of subreddits to mimic the cadence of redditors. I wrote a script to clean and encode reddit comment data for modeling, and adjusted the model's hyperparameters for optimum generation. Additionally, I developed a bot that replies to any comment on reddit containing its name, using the text in the comment as the prompt for generation. All of the code is modular, and replicating my results is very easy!
 
 ## Motivation
 
@@ -39,7 +40,7 @@ The data is clearly high quality, but is in the markdown format and needs to be 
 
 ## Methodology - the model
 
-GPT-2 (Generative Pretrained Transformer) may be some of the latest and greatest in text generation, but the architecture of the model is not especially novel. It is an extremely large [transformer](https://arxiv.org/abs/1706.03762) trained unsupervised on a monstrous 40GB text corpus (compilation of outbound links from Reddit which received at least 3 karma). Transformers use a generic mechanism based on encoder-decoders to detect dependencies between inputs and outputs. Due to their property of linearly improving performance when given more data, GPT-2 generates text of unprecedented realism.
+GPT-2 (Generative Pretrained Transformer) may be some of the latest and greatest in text generation, but the architecture of the model is not especially novel. It is an extremely large [transformer](https://arxiv.org/abs/1706.03762) pretrained unsupervised on a monstrous 40GB text corpus. Transformers employ a generic mechanism based on encoder-decoders to detect dependencies between inputs and outputs. Due to transformers' property of improving performance linearly when given more data and the large initial dataset, GPT-2 generates text of unprecedented realism. Out of the box, the model is generalized and unspecific, but is ripe for fine-tuning with other data, and the generated text maintains its coherence even after retraining.
 
 <p align="center">
   <img src="https://miro.medium.com/max/1474/1*b15IvFFUT-WtPRdxsnoMQw.png" width="460" height="460"> 
@@ -49,7 +50,7 @@ I fine-tuned the 355 million parameter edition of the model, tweaking hyperparam
 
 ## Methodology - the bot
 
-Conveniently, reddit has the functional and easy to use PRAW API, making it relatively painless to develop a bot to suit your needs. The bot sifts through all reddit comments invoking its name using the Pushshift API in the format "bot_name, " using the text after the comma as the prompt it uses to generate text, in which it replies to the original poster with. Bot code [here](../master/bot.py).
+Conveniently, reddit has the functional and easy to use PRAW API, making it relatively painless to develop a bot to suit your needs. The bot searches through all reddit comments created since its last runtime for those containing its name in the format "bot_name, " with the Pushshift API, uses the text after the comma as the prompt for generation, and replies to the initial comment with the text it generated. Bot code [here](../master/bot.py).
 
 Sample interaction with the bot:
 
