@@ -76,7 +76,7 @@ First, clone or download the repository into the directory desired.
 
 Create a viritual environment and install the dependencies. This is easiest with the [Anaconda](https://www.anaconda.com/) terminal.
 
-```conda create --name SubredditBot```
+```conda create --name SubredditBot python=3.6```
 
 ```conda activate SubredditBot```
 
@@ -90,7 +90,9 @@ Then, run the [clean_data](../master/clean_data.py) script to clean reddit data 
 
 ```python clean_data.py data.csv```
 
-Now, the model must be finetuned with your data using [train_model.py](../master/train_model.py). This script will encode the data to a .npz before training, and if you're using a GPU, add ```true``` as the fourth system argument. If continuing previous training, use the .npz file as the third system argument.
+Now, the model must be finetuned with your data using [train_model.py](../master/train_model.py). This script will encode the data to a .npz before training. If continuing previous training, use the .npz file as the third system argument.
+
+Tensorflow is painful to get working with a GPU, but if you're up for the challenge, click [here](https://www.tensorflow.org/install/gpu) for a good start on how to do so. To use a GPU with the training script, add ```true``` as the fourth system argument.
 
 ```python train_model.py data_cleaned.txt 124M```
 
