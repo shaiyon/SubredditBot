@@ -36,7 +36,7 @@ body |
 "Close! It's act grade 2 titanium (grade 2 will darken and develop a patina over time and I can tell its a little bit darker than when I got it back in late June) and 18k rose gold. \n\nThanks, it's really a neat color scheme that they got going on with this particular Speedmaster that you don't see everyday. "  |
 "\&gt; Adding on to that I think that having a seconds hand is pointless if it is not showing the actual correct second.\n\nIt's really not that pointless. It gives you a quick way to check if your watch is actually still running and it also allows you to time things. I use it for the latter quite often. \n\nI don't think it's that silly since watches are marketed as luxury goods now, and not really as time keeping devices."|
 
-The data is clearly high quality, but is in the markdown format and needs to be cleaned up before encoding and feeding into GPT-2. Data cleaning script can be found [here](../master/clean_data.py).
+The data is clearly high quality, but is in the markdown format and needs to be cleaned up before encoding and feeding into GPT-2. Data cleaning script can be found [here](../master/clean_data.py). There are redundant steps present in the script that may be computationally inefficient, but they are necessary to ensure no edge cases slip through the cracks and make it into the cleaned corpus.
 
 ## Methodology - the model
 
@@ -52,19 +52,49 @@ I fine-tuned the 355 million parameter edition of the model, tweaking hyperparam
 
 Conveniently, Reddit has the functional and easy to use PRAW API, making it relatively painless to develop a bot to suit your needs. The bot searches through all Reddit comments created since its last runtime for those containing its name in the format "bot_name, " with the Pushshift API. Then, it uses the text after the comma as the prompt for generation, and replies to the initial comment with the text it generated. Bot code [here](../master/bot.py).
 
+## Results
+
+I learned a lot about the intricacies of natural language processing with this project.  
 
 Sample interaction with the bot:
 
-watches_bot, Should I buy a Seiko 5?
-
-> Or a Timex Weekender? I'm pretty sure it's just a little bit bigger than a Seiko 5. Wearing my favourite watch this morning as well, the Seiko SNN231. Some of the comments were more supportive of the watch, but I've seen it a lot more than a normal post on here. My wrist is 6.5" and I think it's too big for me, but my general rule is "if you like it, get it." This is my Seiko 5. It's on a perlon strap, I'd say about 6.5" and it's a great watch. It's a little bit smaller than I'd like, but it's pretty much perfect for me. I just got it a few weeks ago, but I haven't worn it much, and I've had it for like 6 months, so I'd like to get back into watches again. I think this is a great collection of watches. It's great to see so many different styles and colors. Not just the new limited edition. The limited edition on this watch was last year. My love for the Citizen Nighthawk has been growing over the last couple years. I had the opportunity to purchase it recently and I fell in love with it. I finally took the plunge and bought it. I know a lot of people are going to be offended by this post, but I wanted to share it with you guys so we all know what a beautiful watch it is. I have a picture of the movement and inside of the caseback. As far as I know, the Nighthawk is the first Citizen I have owned. I have been looking for a watch for a long time and this was the best one I could find for a reasonable price. It came in like a month ago and I've already received a few compliments on it. I think it looks like the regular, just the "battery" I have the same problem with my current watch. I've been trying to figure out what's the best way to tell the time. It's so hard to read the time in the dark. I've never seen a Zim watch with a screw-down crown. That's just so nice to see a Citizen with a chronograph, they usually only have one or two, and I think Citizen's are amazing. I have the same one, and it's also in my daily rotation. I think it's pretty cool, and the
-
-## Key Results
-
-
+![sample1](samples/sample1.png)
 
 ## Future Work
 
+- Label comments as a prompt or reply, so the model will respond to comments instead of continuing existing ones
+- Tweak model source code to lower repetition in generation, allowing an increase in temperature
+- Host bot on a cloud service to instantly reply to comments 
+
+## Try it yourself!
+
+If you have any text corpus you would like to make a reddit bot with, you can use this repository to do so yourself. Note that these commands are the most general case, and may have to be slightly adjusted to work for you.
+
+First, clone or download the repository into the directory desired.
+
+```git clone https://github.com/shaiyon/SubredditBot.git```
 
 
-## This README and project are still under construction. A lot more coming soon.
+Create a viritual environment and install the dependencies. This is easiest with the [Anaconda](https://www.anaconda.com/) terminal.
+
+```
+conda create --name SubredditBot
+pip install -r requirements.txt
+```
+
+
+To download the model, use the [download_model](../master/download_model.py) script. I advise using the 124M version unless you have a beefy GPU.
+
+```python download_model.py 124M```
+
+
+Then, run the [clean_data](../master/clean_data.py) script to clean reddit data stored a single columned csv. If your data is plaintext, you can skip this step. 
+
+```python clean_data.py data.csv```
+
+
+The last setup stage is training the model with [train_model.py](../master/train_model.py). This script will encode the data to a .npz before training, and if you're using a GPU, add ```true``` as the fourth system argument.
+
+```python train_model.py data_cleaned.txt 124M```
+
+
