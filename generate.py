@@ -5,7 +5,7 @@ import json
 import os
 import numpy as np
 import tensorflow as tf
-import model, sample, encoder
+import extra.model, extra.sample, extra.encoder
 
 def generate(
     input_text,
@@ -14,8 +14,8 @@ def generate(
     nsamples=1,
     batch_size=1,
     length=None,
-    temperature=0.7,
-    top_k=40,
+    temperature=0.85,
+    top_k=50,
     top_p=0
 ):
     """
