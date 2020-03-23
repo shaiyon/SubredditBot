@@ -1,6 +1,5 @@
 # bot.py
 # reddit bot that replies to comments invoking it
-# structure from https://github.com/hyerramreddy
 # Shaiyon Hariri
 
 import os
@@ -10,12 +9,10 @@ import config
 import re
 from time import sleep
 from random import randrange
-from interactive_conditional_samples import interact_model
+from generate import generate
 import json
 import requests
 
-bot_name = config.bot_name
-bot_name_raw = config.bot_name_raw 
 
 def login():
     reddit = praw.Reddit(client_id=config.client_id,
@@ -58,11 +55,12 @@ def reply_to_comment(reddit, comment_id, comment_reply, comment_subreddit, comme
             print("Retrying in", i, "seconds..")
             sleep(5)
 
-# Stub, will connect with GPT-2 text generation to complete the project
-def generate_response(comment, model):
-    return interact_model(input_text=comment, model_name=model, limit=randrange(40, 80))
 
 def run(reddit, model):
+    # Make config variables local to work with python formatting
+    bot_name = config.bot_name
+    bot_name_raw = config.bot_name_raw
+
     # Time of last comment replied to
     last_utc = 0
 
@@ -78,6 +76,8 @@ def run(reddit, model):
         if (len(parsed_comment_json["data"]) > 0):
             last_utc = parsed_comment_json["data"][0]["created_utc"]
 
+        print ("\nFetching comments..")
+
         for comment in parsed_comment_json["data"]:
 
             comment_author = comment["author"]
@@ -87,14 +87,21 @@ def run(reddit, model):
             comment_reply = ""
 
             if ((bot_name_raw in comment_body or bot_name in comment_body) and comment_author != bot_name):
-                print ("\n\nFound comment.")
+                print ("\nFound comment.")
                 message = re.search(fr"{bot_name_raw}, (.*)", comment_body, re.IGNORECASE)
                 if message:
                     message = message.group(1)
-                comment_reply = generate_response(message, model)
-                reply_to_comment(reddit, comment_id, comment_reply, comment_subreddit, comment_author, comment_body)
                 
-                print ("\nFetching comments..")
+                # Generate reply to comment
+                comment_reply = generate(input_text=message, model_name=model, length=randrange(80, 160))
+                # Remove run on sentence if present
+                for i in range(1, len(comment_reply)-1):
+                    if comment_reply[-i] in {".", "?", "!"}:
+                        comment_reply = comment_reply[:-(i-1)] 
+                        break
+                # Post generated reply on reddit
+                reply_to_comment(reddit, comment_id, comment_reply, comment_subreddit, comment_author, comment_body)
+        
         # Remove comment data after bot is done with it
         if os.path.exists("comment_data.json"):
             os.remove("comment_data.json")
@@ -103,8 +110,9 @@ def run(reddit, model):
         print(str(e.__class__.__name__) + ": " + str(e))
 
     # Write to file the last utc
+    # Commented out for testing
     #with open("utc.txt", "w") as f:
-     #   f.write(str(last_utc))
+    #   f.write(str(last_utc))
 
     return str(last_utc)
 
