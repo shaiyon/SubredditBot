@@ -54,9 +54,9 @@ Conveniently, Reddit has the functional and easy to use PRAW API, making it rela
 
 ## Results
 
-I learned a lot about the intricacies of natural language processing with this project.  
+I learned a lot about the intricacies of natural language processing with this project. The decrease in loss as the model is finetuned plateaus early, as does its effectiveness. When overly specialized, the transformer "forgets" a lot of its vocabulary, and heavily overfits to the given corpus. For optimal performance, try to keep training epochs under a few thousand. Additionally, I found that a higher temperature parameter for sample generation is best for small comments, but makes the model quickly lose coherence with multiple paragraphs. Thus, I've kept the bot's replies short to ensure maximum potency.
 
-Sample interaction with the bot:
+Interacting with the bot on live reddit threads with other users is a surreal experience, and can lead to some insightful conversations. I hope you as a reader have found some value in this repository, and I'm extremely excited to dive deeper into natural language processing in the future!
 
 ![sample1](samples/sample1.png)
 
@@ -68,33 +68,42 @@ Sample interaction with the bot:
 
 ## Try it yourself!
 
-If you have any text corpus you would like to make a reddit bot with, you can use this repository to do so yourself. Note that these commands are the most general case, and may have to be slightly adjusted to work for you.
+If you have a text corpus you would like to make a reddit bot with, you can use this repository to do so yourself. Note that these commands are the most general case, and may have to be slightly adjusted to work for you.
 
 First, clone or download the repository into the directory desired.
 
 ```git clone https://github.com/shaiyon/SubredditBot.git```
 
-
 Create a viritual environment and install the dependencies. This is easiest with the [Anaconda](https://www.anaconda.com/) terminal.
 
-```
-conda create --name SubredditBot
-pip install -r requirements.txt
-```
+```conda create --name SubredditBot```
 
+```conda activate SubredditBot```
+
+```pip install -r requirements.txt``` *Note that the working directory must be where the repository files are*
 
 To download the model, use the [download_model](../master/download_model.py) script. I advise using the 124M version unless you have a beefy GPU.
 
 ```python download_model.py 124M```
 
-
-Then, run the [clean_data](../master/clean_data.py) script to clean reddit data stored a single columned csv. If your data is plaintext, you can skip this step. 
+Then, run the [clean_data](../master/clean_data.py) script to clean reddit data stored as a single columned csv. If your data is plaintext, you can skip this step. Make sure the data is in the same directory as the files from this repository. 
 
 ```python clean_data.py data.csv```
 
-
-The last setup stage is training the model with [train_model.py](../master/train_model.py). This script will encode the data to a .npz before training, and if you're using a GPU, add ```true``` as the fourth system argument.
+Now, the model must be finetuned with your data using [train_model.py](../master/train_model.py). This script will encode the data to a .npz before training, and if you're using a GPU, add ```true``` as the fourth system argument. If continuing previous training, use the .npz file as the third system argument.
 
 ```python train_model.py data_cleaned.txt 124M```
+
+When you feel satisfied with the samples generated, ```CTRL+C``` to end training and save the model. 
+
+Next, make a reddit account for your bot, and navigate to https://www.reddit.com/prefs/apps/. Click *Create App*, set up the application, and fill in [config.py](../master/config.py) with the proper parameters.
+
+Now, you can run the [bot](../master/config.py)! 
+
+```python bot.py 124M```
+
+If these steps don't work for you or there's an error, please let me know so I can adjust the instructions.
+
+##### ~shaiyon
 
 
