@@ -4,26 +4,20 @@
 
 import re
 import sys
+import csv
 import pandas as pd
 from bs4 import BeautifulSoup
 from markdown import markdown
-from gpt_2_simple import encode_dataset
 
 # Pass in name of dataset as system argument
-if len(sys.argv) not in [2, 3]:
+if len(sys.argv) != 2:
     print('You must enter the dataset file name as a parameter, e.g.: clean_data.py comments.csv')
-    print('You may also enter the model name (default 355M), e.g.: clean_data.py comments.csv 774M')
     sys.exit(1)
-
-if sys.argv[2] in ['124M', '355M', '774M', '1558M']:
-    model_name = sys.argv[2]
-else:
-    model_name = "355M"
 
 # Use iloc to make Series
 # Can use any subreddit dataset(s).
 try:
-    data = pd.read_csv(sys.argv[1]).iloc[:,1]
+    data = pd.read_csv(sys.argv[1]).iloc[:,0]
     print("Data loaded. cleaning...")
 except:
     print("Data failed to load. Make sure the dataset is in the same directory as the script.")
@@ -36,10 +30,9 @@ data = data.loc[data != "[deleted]"]
 # Filter out bots and sale posts
 data = data[~data.str.contains("^", regex=False)]
 data = data[~data.str.contains("|", regex=False)]
+data = data[~data.str.contains(" bot ", regex=False)]
 # Remove entries too small for dataset
 data = data[data.str.len() > 30]
-# Replace any amount of newlines in a row with spaces
-data = data.str.replace(r'\n{1,}', ' ', regex=True)
 
 def markdown_to_text(markdown_string):
     """ Converts a markdown string to plaintext """
@@ -64,24 +57,20 @@ data = data.apply(markdown_to_text)
 data = data.str.replace('&amp;', '&', regex=False).str.replace('&lt;', '<', regex=False).str.replace('&gt;', '>', regex=False).str.replace('&#x200B;' , ' ', regex=False)
 # Remove links and URLs
 data = data.str.replace(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', '', regex=True)
-# Remove entries too small for dataset (again)
-data = data[data.str.len() > 30]
 # Remove whitespace at beginning and end
 data = data.str.strip()
-# Drop duplicates and reset index
-data.drop_duplicates(inplace=True)
+# Remove extra whitespace
+data = data.str.replace(r'\s+', ' ', regex=True)
+# Remove entries too small for dataset (again)
+data = data[data.str.len() > 30]
 # Remove NaN values and empty strings (again)
 data.dropna(inplace=True)
+# Drop duplicates and reset index
+data.drop_duplicates(inplace=True)
 data.reset_index(drop=True, inplace=True)
 
 # Save cleaned data
 print("Data cleaned. saving...")
 saved_file_name = sys.argv[1][:-4] + "_cleaned.txt"
-data.to_csv(saved_file_name, sep='\n', index=False, header=False)
+data.to_csv(saved_file_name, sep='\n', index=False, header=False, quoting=csv.QUOTE_NONE, escapechar='\n')
 print("Data saved.")
-
-# Encode dataset
-encoded_file_name = sys.argv[1][:-4] + "_encoded.npz"
-encode_dataset(saved_file_name, out_path=encoded_file_name, model_name=model_name)
-print("Data encoded.")
-
