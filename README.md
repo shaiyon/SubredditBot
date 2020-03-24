@@ -43,7 +43,7 @@ The data is clearly high quality, but is in the markdown format and needs to be 
 GPT-2 (Generative Pretrained Transformer) may be some of the latest and greatest in text generation, but the architecture of the model is not especially novel. It is an extremely large [transformer](https://arxiv.org/abs/1706.03762) pretrained unsupervised on a monstrous 40GB text corpus. Transformers employ a generic mechanism based on encoder-decoders to detect dependencies between inputs and outputs. Due to transformers' property of improving performance linearly when given more data and the large initial dataset, GPT-2 generates text of unprecedented realism when compared to its peers. Out of the box, the model is generalized and unspecific, but is ripe for fine-tuning with other data, and the generated text maintains its coherence even after retraining.
 
 <p align="center">
-  <img src="https://miro.medium.com/max/1474/1*b15IvFFUT-WtPRdxsnoMQw.png" width="460" height="460"> 
+  <img src="https://miro.medium.com/max/1474/1*b15IvFFUT-WtPRdxsnoMQw.png" width="50%" height="50%"> 
 </p>
 
 I fine-tuned the 355 million parameter edition of the model, tweaking hyperparameters to make the text generated seem more natural and less repetitive. Then, I edited an existing script for generating samples to be able to connect with the Reddit bot. Code for generating samples [here](../master/interactive_conditional_samples.py).  
@@ -96,7 +96,7 @@ Then, run the [clean_data](../master/clean_data.py) script to clean reddit data 
 
 Now, the model must be finetuned with your data using [train_model.py](../master/train_model.py). This script will encode the data to a .npz before training. If continuing previous training, use the .npz file as the third system argument.
 
-Tensorflow is painful to get working with a GPU, but if you're up for the challenge, click [here](https://www.tensorflow.org/install/gpu) for a good start on how to do so. To use a GPU with the training script, add ```true``` as the fourth system argument.
+Tensorflow is painful to get working with a GPU, but if you're up for the challenge, click [here](https://www.tensorflow.org/install/gpu) for a good start on how to do so.
 
 ```python train_model.py data_cleaned.txt 124M```
 
