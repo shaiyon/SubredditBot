@@ -1,4 +1,4 @@
-# Taken from https://github.com/nshepperd/gpt-2/blob/finetuning/src/encoder.py
+# Script from OpenAI: https://github.com/nshepperd/gpt-2/blob/finetuning/src/encoder.py
 
 """Byte pair encoding utilities"""
 

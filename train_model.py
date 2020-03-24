@@ -1,3 +1,6 @@
+# train_model.py
+# Encode and train the model
+
 import sys
 import gpt_2_simple as gpt2
 import pandas as pd
@@ -28,10 +31,5 @@ if file_name[-4:] != ".npz":
         print("Failed to encode data. Please check that your file is a text corpus that can be encoded.")
         sys.exit(1)    
 
-# Multi-gpu support
-if len(sys.argv) == 4:
-    if sys.argv[3] == "True" or sys.argv[3] == "true":  
-        gpt2.finetune(sess, file_name, model_name=model_name, multi_gpu=True, overwrite=True)
-else:
-    gpt2.finetune(sess, file_name, model_name=model_name, multi_gpu=False, overwrite=True)
+gpt2.finetune(sess, file_name, model_name=model_name, multi_gpu=False, overwrite=True)
 

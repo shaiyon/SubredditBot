@@ -1,11 +1,13 @@
 # Script to generate text
-# Adapted from OpenAI's interactive_conditional_sample, with adjustments to fit use case
+# Adapted from OpenAI: https://github.com/openai/gpt-2/blob/master/src/interactive_conditional_samples.py
 
 import json
 import os
 import numpy as np
 import tensorflow as tf
-import extra.model, extra.sample, extra.encoder
+import extra.model as model 
+import extra.sample as sample 
+import extra.encoder as encoder
 
 def generate(
     input_text,

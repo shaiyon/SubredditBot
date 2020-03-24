@@ -1,8 +1,7 @@
-# Script taken from https://github.com/nshepperd/gpt-2/blob/finetuning/src/sample.py
+# Script from OpenAI: https://github.com/nshepperd/gpt-2/blob/finetuning/src/sample.py
 
 import tensorflow as tf
-
-import model
+import extra.model as model
 
 def top_k_logits(logits, k):
     if k == 0:

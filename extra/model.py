@@ -1,4 +1,4 @@
-# Model script taken from https://github.com/nshepperd/gpt-2/blob/finetuning/src/model.py
+# Script from OpenAI: https://github.com/nshepperd/gpt-2/blob/finetuning/src/model.py
 
 import numpy as np
 import tensorflow as tf
