@@ -54,11 +54,15 @@ Conveniently, Reddit has the functional and easy to use PRAW API, making it rela
 
 ## Results
 
-I learned a lot about the intricacies of natural language processing with this project. The decrease in loss as the model is finetuned plateaus early, as does its effectiveness. When overly specialized, the transformer "forgets" a lot of its vocabulary, and heavily overfits to the given corpus. For optimal performance, try to keep training epochs under a few thousand. Additionally, I found that a higher temperature parameter for sample generation is best for small comments, but makes the model quickly lose coherence with multiple paragraphs. Thus, I've kept the bot's replies short to ensure maximum potency.
+I learned a lot about python best practices and natural language processing during this project. The decrease in loss as the model is finetuned plateaus early, as does its effectiveness. When overly specialized, the transformer "forgets" a lot of its vocabulary, and heavily overfits to the given corpus. For optimal performance, I kept training epochs under a few thousand. Additionally, I found that a higher temperature parameter for sample generation is best for small comments, but makes the model quickly lose coherence with multiple paragraphs. Thus, I've kept the bot's replies somewhat short to ensure maximum potency.
 
-Interacting with the bot on live reddit threads with other users is a surreal experience, and can lead to some insightful conversations. I hope you as a reader have found some value in this repository, and I'm extremely excited to dive deeper into natural language processing in the future!
+Interacting with the bot is very amusing and it can sometimes even be insightful. While it won't pass the Turing test anytime soon, it's hard not to laugh at what it manages to cook up. I hope you as a reader have found some value in this repository, and I'm extremely excited to dive deeper into natural language processing in the future!
 
 ![sample1](samples/sample1.png)
+
+![sample2](samples/sample2.png)
+
+![sample3](samples/sample3.png)
 
 ## Future Work
 
@@ -98,7 +102,7 @@ Tensorflow is painful to get working with a GPU, but if you're up for the challe
 
 When you feel satisfied with the samples generated, ```CTRL+C``` to end training and save the model. 
 
-Next, make a reddit account for your bot, and navigate to https://www.reddit.com/prefs/apps/. Click *Create App*, set up the application, and fill in [config.py](../master/config.py) with the proper parameters.
+Next, make a reddit account for your bot, and navigate to https://www.reddit.com/prefs/apps/. Click *Create App*, set up the application, and fill in [config.py](../master/config.py) with the proper parameters. Note that the bot won't be able to make multiple comments in quick succession with low karma, so try to post a few comments organically first if possible.
 
 Now, you can run the [bot](../master/config.py)! 
 
